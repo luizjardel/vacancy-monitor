@@ -15,7 +15,6 @@ load_dotenv()
 
 
 def filtrar_vagas_relevantes(vagas: list[dict], palavras_chave: list[str]) -> list[dict]:
-    """Retorna vagas que combinam com as palavras-chave E que sao do Brasil/LATAM."""
     vagas_tecnicas = filtrar_por_palavras_chave(vagas, palavras_chave)
     vagas_regiao = filtrar_vagas_latam_brasil(vagas)
 
@@ -44,7 +43,7 @@ def rodar_verificacao():
     for vaga in novas_vagas:
         mensagem = (
             f"🎯 Nova vaga encontrada! ({vaga['fonte']})\n\n"
-            f"*{vaga['titulo']}*\n"
+            f"{vaga['titulo']}\n"
             f"Empresa: {vaga['empresa']}\n"
             f"Localizacao: {vaga['localizacao'] or 'Nao informada'}\n\n"
             f"{vaga['descricao']}\n\n"

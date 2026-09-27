@@ -1,10 +1,12 @@
-
 import os
 import requests
 
 
 def enviar_telegram(mensagem: str) -> bool:
-
+    """
+    Envia uma mensagem via Telegram usando o bot configurado.
+    Retorna True se enviou com sucesso, False caso contrario.
+    """
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
 
@@ -16,7 +18,6 @@ def enviar_telegram(mensagem: str) -> bool:
     payload = {
         "chat_id": chat_id,
         "text": mensagem,
-        "parse_mode": "Markdown",
     }
 
     try:
@@ -25,7 +26,10 @@ def enviar_telegram(mensagem: str) -> bool:
         print("[OK] Mensagem enviada com sucesso!")
         return True
     except requests.RequestException as e:
-        print(f"[ERRO] Falha ao enviar mensagem via Telegram: {e}")
+        detalhe = ""
+        if e.response is not None:
+            detalhe = f" | Resposta da API: {e.response.text}"
+        print(f"[ERRO] Falha ao enviar mensagem via Telegram: {e}{detalhe}")
         return False
 
 
